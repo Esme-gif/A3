@@ -420,6 +420,97 @@ var MyToolkit = (function() {
         var maxLength = 200
         var getposition = false
 
+        var mOver = false;
+        var mDown = false;
+        var mMove = false;
+        var mDy
+
+
+
+        rectSRect.mouseover(function(){
+            this.fill({ color: 'beige'})
+            mOver = true;
+            defaultState = "hover"
+            console.log("mouseover")
+            transition()
+        })
+        rectSRect.mousedown(function(event){
+            this.fill({ color: 'pink'})
+            mDown = true;
+            defaultState = "Moving Down"
+            console.log("mousedown")
+            transition()
+        })
+        rectSRect.mousemove(function(event){
+            console.log("mousemove")
+            console.log(event)
+            mMove = true
+            mDy = event.clientY;
+        })
+        rectSRect.mouseout(function(event){
+            this.fill({ color: 'blanchedalmond'})
+            if (mDown && mOver && mMove){
+                if (rectSRect.y() > 65 && rectSRect.y() < maxLength){
+                    if (event.clientY > mDy){
+                        //down
+                        defaultState = "Moving DOWN"
+                        console.log((event.pageY)-mDy)
+                        this.dy((event.pageY)-mDy);
+                        
+                    }
+                    else{
+                        //up
+                        
+                        defaultState = "Moving UP"
+                        console.log((event.pageY)-mDy)
+                        this.dy((event.pageY)-mDy);
+                        
+                    }
+                    if (getposition){
+                        if (rectSRect.y() < (maxLength/2)){
+                            console.log("upper half");
+                        }
+                        else{
+                            console.log("lower half");
+                        }
+                    }
+                }
+                else if(rectSRect.y() < 65 ){
+                    rectSRect.y(65)
+                }
+                else{
+                    rectSRect.y(maxLength)
+                }
+                
+            }
+            else{
+                mOver = false;
+                mDown = false;
+                mMove = false;
+                defaultState = "idle"
+            }
+            
+            console.log("mouse out")
+            transition()
+        })
+        rectSRect.mouseup(function(){
+            this.fill({ color: 'blanchedalmond'})
+            mOver = false;
+            mDown = false;
+            console.log("mouse up")
+            defaultState = "idle"
+            transition()
+        })
+        rectSRect.click(function(event){
+            this.fill({ color: 'pink'})
+            direction = "DOWN"
+            console.log(direction);
+            if(moveEvent != null)
+                moveEvent(event)
+        })
+
+
+
         rectUp.mouseover(function(){
             this.fill({ color: 'beige'})
             defaultState = "hover"

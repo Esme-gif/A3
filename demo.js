@@ -6,25 +6,8 @@ import {MyToolkit} from './mytoolkit.js';
 // two parameters are returned and they are used on the rest of the widets
 var Menu = new MyToolkit.Container;
 
+
 /*
-// Implement a MyToolkit Button
-//making a button use the Contanier parameters as arguments
-var btn = new MyToolkit.Button(Menu[0], Menu[1]);
-//customize text that you want to go on the button
-btn.customText("Press");
-//move the button wherever you want
-btn.move(100,100);
-//onclick shows the button is clicked event (add function parameter)
-btn.onclick(function(e){
-	console.log(e);
-})
-//add a function in order to print the state
-btn.stateChanged(function(event){
-	console.log(event)
-})
-
-
-
 // Implement a MyToolkit TextBox
 //making a textBox use the Contanier parameters as arguments
 var tBox = new MyToolkit.TextBox(Menu[0], Menu[1]);
@@ -56,6 +39,23 @@ CHBox.stateChanged(function(event){
 })
 
 
+// Implement a MyToolkit Button
+//making a button use the Contanier parameters as arguments
+var btn = new MyToolkit.Button(Menu[0], Menu[1]);
+//customize text that you want to go on the button
+btn.customText("Press");
+//move the button wherever you want
+btn.move(100,100);
+//onclick shows the button is clicked event (add function parameter)
+btn.onclick(function(e){
+	console.log(e);
+})
+//add a function in order to print the state
+btn.stateChanged(function(event){
+	console.log(event)
+})
+
+
 //implementing progress bar
 //making a progress bar use the Contanier parameters as arguments
 var PBar = new MyToolkit.ProgressBar(Menu[0], Menu[1]);
@@ -67,7 +67,7 @@ PBar.setIncrement(75);
 //whenever you increase it or decrease it
 PBar.getValue(true);
 //move the progress bar wherever (even outside the container)
-PBar.move(50,50);
+PBar.move(40,160);
 //event handler that shows when the increase or decrease of the increment value happen
 PBar.onIncrement(function(e){
 	console.log(e)
@@ -77,14 +77,7 @@ PBar.stateChanged(function(event){
 	console.log(event)
 })
 
-
 */
-
-// Implement a MyToolkit Radio Button
-var RButton = new MyToolkit.RadioB(Menu[0], Menu[1], [["dog",true],["cat",false]]);
-RButton.move(100,155);
-
-
 //Implement a MyToolkit Scroll Bar
 //making a scroll bar use the Contanier parameters as arguments
 var SBar = new MyToolkit.ScrollBar(Menu[0], Menu[1]);
@@ -93,7 +86,7 @@ SBar.heightSet(250);
 //get the position of bar
 SBar.getPosition(true);
 //position your scroll bar
-SBar.move(300,30);
+SBar.move(420,30);
 //event handler that shows movement and direction
 SBar.onMovement(function(e){
 	console.log(e)
@@ -104,3 +97,12 @@ SBar.stateChanged(function(event){
 })
 
 
+/*
+
+// Implement a MyToolkit Radio Button
+var RButton = new MyToolkit.RadioB(Menu[0], Menu[1], [["dog",true],["cat",false]]);
+RButton.move(100,155);
+
+
+
+*/
