@@ -431,38 +431,37 @@ var MyToolkit = (function() {
             this.fill({ color: 'beige'})
             mOver = true;
             defaultState = "hover"
-            console.log("mouseover")
             transition()
         })
         rectSRect.mousedown(function(event){
             this.fill({ color: 'pink'})
-            mDown = true;
+            if (mOver && mMove){
+                mDown = true;
+            }
+            else{
+                mDown = false;
+            }
+            
             defaultState = "Moving Down"
-            console.log("mousedown")
             transition()
         })
         rectSRect.mousemove(function(event){
-            console.log("mousemove")
-            console.log(event)
             mMove = true
             mDy = event.clientY;
         })
         rectSRect.mouseout(function(event){
             this.fill({ color: 'blanchedalmond'})
             if (mDown && mOver && mMove){
-                if (rectSRect.y() > 65 && rectSRect.y() < maxLength){
+                if (rectSRect.y() > 65 && rectSRect.y() <= maxLength){
                     if (event.clientY > mDy){
                         //down
                         defaultState = "Moving DOWN"
-                        console.log((event.pageY)-mDy)
                         this.dy((event.pageY)-mDy);
                         
                     }
                     else{
                         //up
-                        
                         defaultState = "Moving UP"
-                        console.log((event.pageY)-mDy)
                         this.dy((event.pageY)-mDy);
                         
                     }
@@ -490,14 +489,13 @@ var MyToolkit = (function() {
                 defaultState = "idle"
             }
             
-            console.log("mouse out")
             transition()
         })
         rectSRect.mouseup(function(){
             this.fill({ color: 'blanchedalmond'})
             mOver = false;
             mDown = false;
-            console.log("mouse up")
+            mMove = false;
             defaultState = "idle"
             transition()
         })

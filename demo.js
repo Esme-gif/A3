@@ -77,7 +77,7 @@ PBar.stateChanged(function(event){
 	console.log(event)
 })
 
-*/
+
 //Implement a MyToolkit Scroll Bar
 //making a scroll bar use the Contanier parameters as arguments
 var SBar = new MyToolkit.ScrollBar(Menu[0], Menu[1]);
@@ -95,9 +95,9 @@ SBar.onMovement(function(e){
 SBar.stateChanged(function(event){
 	console.log(event)
 })
+*/
 
 
-/*
 
 // Implement a MyToolkit Radio Button
 var RButton = new MyToolkit.RadioB(Menu[0], Menu[1], [["dog",true],["cat",false]]);
@@ -105,4 +105,4 @@ RButton.move(100,155);
 
 
 
-*/
+
