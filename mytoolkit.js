@@ -1,6 +1,10 @@
 import {SVG} from './svg.min.js';
 
 var radiolength = []
+var checkevent = null
+var stateEE = null
+var deState = "idle"
+
 /**
  * @param  {} function(
  */
@@ -264,28 +268,135 @@ var MyToolkit = (function() {
     }
     /**
      * @param  {} draw
+     */
+    var createGroup = function(draw){
+        var radbutton = draw.group();
+        return radbutton
+    }
+    /**
+     * @param  {} radbutton
+     * @param  {} draw
+     * @param  {} nRbutton
+     */
+    var rBox = function(radbutton, draw, nRbutton){
+        
+        var rectMR = radbutton.rect(90,(50 + (10 * nRbutton))).fill('white').stroke({width : 3, color : "blanchedalmond" })
+
+        rectMR.mouseover(function(){
+            deState = "idle"
+            transitionss()
+        })
+        rectMR.mouseout(function(){
+            deState = "idle"
+            transitionss()
+        })
+        rectMR.mouseup(function(){
+            deState = "idle"
+            transitionss()
+        })
+
+        return {
+            /**
+             * @param  {} eventHandler
+             */
+            stateChanged: function(eventHandler){
+                stateEE = eventHandler
+            }
+        }
+    }
+    /**
+     * @param  {} radbutton
+     * @param  {} draw
      * @param  {} frame
+     * @param  {} last
      * @param  {} nRadio
      */
-    var RadioB = function(draw, frame, nRadio){
-        var radbutton = draw.group();
-        var recttt = []
-        for (let i = 0; i < nRadio.length; i++){
-            radiolength.push(nRadio[i][1]);
+    var RadioB = function(radbutton, draw, frame,last, nRadio){
+        let grouped = draw.group();
+        radiolength.push(nRadio[1]);
+
+        var rectone = grouped.circle(20).fill('white').stroke({width : 2, color : "black"}).move(4,10)
+        var rectOne = grouped.circle(14).fill('white').move(7,13)
+        if (nRadio[1]){
+            rectOne.fill("blanchedalmond")
         }
-        
-        for (let i = 0; i < nRadio.length; i++){
-            recttt.push(new WidgetParent(nRadio[i][0], radbutton, i, draw));
+        var textOne = grouped.text(nRadio[0]).move(45,10)
+
+        grouped.move(10,(10 + (30 * nRadio[2])));
+
+        rectOne.mouseover(function(){
+            this.fill({ color: 'black'})
+            deState = "hover"
+            transitionss()
+        })
+        rectOne.mousedown(function(){
+            
+            if (radiolength[nRadio[2]] == false){
+                for (let i = 0; i < radiolength.length; i++){
+                    if (radiolength[i]){
+                        radiolength[i] = false;
+                    }
+                }
+                radiolength[nRadio[2]] = true;
+
+                this.fill({ color: 'blanchedalmond'})
+                deState = "checked " + (nRadio[2]+1)
+            }
+            console.log(radiolength)
+            transitionss()
+        })
+        rectOne.mouseout(function(){
+            if (radiolength[nRadio[2]] == false){
+                this.fill({ color: 'white'})
+            }
+            else{
+                this.fill({ color: 'blanchedalmond'})
+            }
+        })
+        rectOne.mouseup(function(){
+            if (radiolength[nRadio[2]] == false){
+                this.fill({ color: 'white'})
+            }
+            else{
+                this.fill({ color: 'blanchedalmond'})
+            }
+        })
+        rectOne.mousemove(function(){
+            if (radiolength[nRadio[2]] == false){
+                this.fill({ color: 'white'})
+            }
+            else{
+                this.fill({ color: 'blanchedalmond'})
+            }
+        })
+        rectOne.click(function(event){
+            this.fill({ color: 'pink'})
+            if(checkevent != null)
+                checkevent(event)
+        })
+
+        radbutton.add(grouped);
+
+        if (last){
+            frame.add(radbutton);
         }
-        //var rectMR = radbutton.rect(90,40).fill('white').stroke({width : 3, color : "black" })
-        //var rectOne = radbutton.circle(20).fill('white').stroke({width : 2, color : "black"}).move(4,10)
-        //var textOne = radbutton.text("dogs").move(45,10);
-        
-        frame.add(radbutton);
         return {
             move: function(x,y){
                 radbutton.move(x,y)
+            },
+            /**
+             * @param  {} eventHandler
+             */
+             stateChanged: function(eventHandler){
+                stateEE = eventHandler
+            },
+            /**
+             * @param  {} eventHandler
+             */
+            onchecked: function(eventHandler){
+                checkevent = eventHandler
             }
+
         }
     }
     /**
@@ -726,98 +837,15 @@ var MyToolkit = (function() {
             }
         }
     }
-return {Container, Button, TextBox, Checkbox, RadioB, ProgressBar, ScrollBar}
+return {Container, Button, TextBox, Checkbox, createGroup, rBox, RadioB, ProgressBar, ScrollBar}
 }());
 
-
-class WidgetParent{
-    constructor(text, radbutton, position, draw){
-        
-        var grouped = draw.group();
-        var rectone = grouped.circle(20).fill('white').stroke({width : 2, color : "black"}).move(4,10)
-        var rectOne = grouped.circle(14).fill('white').move(7,13)
-        if (radiolength[position]){
-            rectOne.fill("black")
+function transitionss()
+    {
+        if (stateEE != null){
+            stateEE(deState)
         }
-        var textOne = grouped.text(text).move(45,10)
-
-        grouped.move(10,(10 + (30 * position)));
-
-        this.clickEvent = null
-        this.stateEvent = null
-        this.defaultState = "idle"
-        
-    
-        rectOne.mouseover(function(){
-            this.fill({ color: 'beige'})
-            defaultState = "hover"
-            transition()
-        })
-        rectOne.mousedown(function(){
-            
-            if (radiolength[position] == false){
-                for (let i = 0; i < radiolength.length; i++){
-                    if (radiolength[i]){
-                        radiolength[i] = false;
-                    }
-                }
-                radiolength[position] = true;
-
-                this.fill({ color: 'black'})
-                defaultState = "checked"
-            }
-            console.log(radiolength)
-            transition()
-        })
-        rectOne.mouseout(function(){
-            if (radiolength[position] == false){
-                this.fill({ color: 'white'})
-            }
-            else{
-                this.fill({ color: 'black'})
-            }
-            defaultState = "idle"
-            transition()
-        })
-        rectOne.mouseup(function(){
-            if (radiolength[position] == false){
-                this.fill({ color: 'white'})
-            }
-            else{
-                this.fill({ color: 'black'})
-            }
-            defaultState = "idle"
-            transition()
-        })
-        rectOne.mousemove(function(){
-            if (radiolength[position] == false){
-                this.fill({ color: 'white'})
-            }
-            else{
-                this.fill({ color: 'black'})
-            }
-        })
-        rectOne.click(function(event){
-            this.fill({ color: 'pink'})
-            if(clickEvent != null)
-                clickEvent(event)
-        })
-
-        function transition()
-        {
-            if (stateEvent != null){
-                stateEvent(defaultState)
-            }
-        }
-        
-
-        radbutton.add(grouped)
-
-
     }
 
-    
-
-}
 
 export{MyToolkit}
