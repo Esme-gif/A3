@@ -1,6 +1,9 @@
 import {SVG} from './svg.min.js';
 
 var radiolength = []
+/**
+ * @param  {} function(
+ */
 var MyToolkit = (function() {
     var Container = function(){
         var draw = SVG().addTo('body').size('1000px','1000px');
@@ -8,7 +11,10 @@ var MyToolkit = (function() {
         frame.rect(500,500).stroke("orange").fill("white")
         return [draw, frame];
     }
-
+    /**
+     * @param  {} draw
+     * @param  {} frame
+     */
     var Button = function(draw, frame){
         var button = draw.group();
         var rect = button.rect(100,50).fill('blanchedalmond').radius(10)
@@ -51,21 +57,38 @@ var MyToolkit = (function() {
         
         frame.add(button);
         return {
+            /**
+             * @param  {} x
+             * @param  {} y
+             */
             move: function(x, y) {
                 button.move(x, y);
             },
+            /**
+             * @param  {} custom
+             */
             customText: function(custom){
                 button.text(custom).font({size: 25}).move(25, 10);
             },
+            /**
+             * @param  {} eventHandler
+             */
             stateChanged: function(eventHandler){
                 stateEvent = eventHandler
             },
+            /**
+             * @param  {} eventHandler
+             */
             onclick: function(eventHandler){
                 clickEvent = eventHandler
             }
         }
     }
     
+    /**
+     * @param  {} draw
+     * @param  {} frame
+     */
     var TextBox = function(draw, frame){
         var textbox = draw.group();
         var rectT = textbox.rect(200, 30).fill("white").stroke("black")
@@ -124,18 +147,31 @@ var MyToolkit = (function() {
 
         frame.add(textbox);
         return {
+            /**
+             * @param  {} x
+             * @param  {} y
+             */
             move: function(x,y){
                 textbox.move(x,y)
             },
+            /**
+             * @param  {} eventHandler
+             */
             stateChanged: function(eventHandler){
                 stateEv = eventHandler
             },
+            /**
+             * @param  {} eventHandler
+             */
             onTextChange: function(eventHandler){
                 textEv = eventHandler
             }
         }
     }
-
+    /**
+     * @param  {} draw
+     * @param  {} frame
+     */
     var Checkbox = function(draw, frame){
         var checkbox = draw.group();
         var rectC = checkbox.rect(30,30).fill('white').stroke({ width: 3, color: "black" }).move(2,4)
@@ -199,21 +235,38 @@ var MyToolkit = (function() {
         }
         frame.add(checkbox);
         return {
+            /**
+             * @param  {} x
+             * @param  {} y
+             */
             move: function(x, y) {
                 checkbox.move(x, y);
             },
+            /**
+             * @param  {} custom
+             */
             customText: function(custom){
                 checkbox.text(custom).move(50,6);
             },
+            /**
+             * @param  {} eventHandler
+             */
             stateChanged: function(eventHandler){
                 stateE = eventHandler
             },
+            /**
+             * @param  {} eventHandler
+             */
             onchecked: function(eventHandler){
                 clickE = eventHandler
             }
         }
     }
-
+    /**
+     * @param  {} draw
+     * @param  {} frame
+     * @param  {} nRadio
+     */
     var RadioB = function(draw, frame, nRadio){
         var radbutton = draw.group();
         var recttt = []
@@ -235,7 +288,10 @@ var MyToolkit = (function() {
             }
         }
     }
-
+    /**
+     * @param  {} draw
+     * @param  {} frame
+     */
     var ProgressBar = function(draw, frame){
         var progressBar = draw.group();
         var rectP = progressBar.rect(200, 20).fill("white").stroke("black").radius(10)
@@ -360,6 +416,9 @@ var MyToolkit = (function() {
 
         frame.add(progressBar);
         return {
+            /**
+             * @param  {} setX
+             */
             widthSet: function(setX){
                 rectP.size(setX,20)
                 rectPB.size(setX,18)
@@ -368,24 +427,43 @@ var MyToolkit = (function() {
                 maxSize = setX
                 
             },
+            /**
+             * @param  {} value
+             */
             setIncrement: function(value){
                 incremented = value;
             },
+            /**
+             * @param  {} yes_no
+             */
             getValue: function(yes_no){
                 getIncrement = yes_no;
             },
+            /**
+             * @param  {} x
+             * @param  {} y
+             */
             move: function(x,y){
                 progressBar.move(x,y)
             },
+            /**
+             * @param  {} eventHandler
+             */
             stateChanged: function(eventHandler){
                 sEvent = eventHandler
             },
+            /**
+             * @param  {} eventHandler
+             */
             onIncrement: function(eventHandler){
                 iEvent = eventHandler
             }
         }
     }
-
+    /**
+     * @param  {} draw
+     * @param  {} frame
+     */
     var ScrollBar = function(draw, frame){
         var scrollBar = draw.group();
         var rectSB = scrollBar.rect(30, 200).fill("white").stroke("black").radius(10)
@@ -610,9 +688,16 @@ var MyToolkit = (function() {
 
         frame.add(scrollBar);
         return {
+            /**
+             * @param  {} x
+             * @param  {} y
+             */
             move: function(x,y){
                 scrollBar.move(x,y)
             },
+            /**
+             * @param  {} setY
+             */
             heightSet: function(setY){
                 rectSB.size(30,setY)
                 rectUp.move(1,-35)
@@ -621,12 +706,21 @@ var MyToolkit = (function() {
                 arrowDown.move(5,setY+15)
                 maxLength = setY+5
             },
+            /**
+             * @param  {} yes_no
+             */
             getPosition(yes_no){
                 getposition = yes_no;
             },
+            /**
+             * @param  {} event
+             */
             onMovement: function(event){
                 moveEvent = event;
             },
+            /**
+             * @param  {} eventHandler
+             */
             stateChanged: function(eventHandler){
                 stateEvent = eventHandler
             }
